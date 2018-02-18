@@ -1,0 +1,1 @@
+sudo docker exec -it cluster_sparkmaster_1 bin/pyspark

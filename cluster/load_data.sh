@@ -1,0 +1,1 @@
+sudo docker cp "$1" "cluster_sparkmaster_1:/usr/local/spark-2.2.1-bin-hadoop2.7/data/$1"

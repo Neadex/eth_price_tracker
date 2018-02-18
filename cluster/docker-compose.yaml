@@ -1,0 +1,42 @@
+cass0_eth:
+  hostname: cass0_gafa
+  container_name: cass0_gafa
+  image: neadex/cass0:gafa
+  command: /bin/bash -c "sleep 1 && echo ' -- Pausing to let system catch up ... -->' && /docker-entrypoint.sh cassandra -f"
+  expose:
+    - 7000
+    - 7001
+    - 7199
+    - 9042
+    - 9160
+
+sparkmaster:
+  image: neadex/spark_docker_compose
+  ports:
+    - 4040:4040
+    - 7077:7077
+    - 8080:8080
+  environment:
+    SPARK_ROLE: master
+
+sparkslave1:
+  image: neadex/spark_docker_compose
+  entrypoint: dockerize -wait tcp://sparkmaster:7077 -timeout 240s /sbin/my_init
+  ports:
+    - 8081:8081
+  links:
+    - sparkmaster
+  environment:
+    SPARK_MASTER: sparkmaster
+    SPARK_ROLE: slave
+
+sparkslave2:
+  image: neadex/spark_docker_compose
+  entrypoint: dockerize -wait tcp://sparkmaster:7077 -timeout 240s /sbin/my_init
+  ports:
+    - 8091:8081
+  links:
+    - sparkmaster
+  environment:
+    SPARK_MASTER: sparkmaster
+    SPARK_ROLE: slave
