@@ -2,7 +2,7 @@
 
 1. Téléchargement de l'archive contenant cass0:gafa et chargement de l'image
 
-	wget https://drive.google.com/uc?export=download&confirm=1LVu&id=1KXDepX4jWYOrRliqNVG5Rzs9uxAxaZAs
+	wget [url]
 	sudo docker load -i cass0_gafa.tar
 
 	Si la commande wgetne fonctionne pas, télécharger directement sur :
